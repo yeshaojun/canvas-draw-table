@@ -83,7 +83,6 @@ class DrawCanvas {
     this.ctx = this.c.getContext("2d");
     this.c.width = document.body.clientWidth;
     this.c.height = document.body.clientHeight - 64;
-    // console.log('init')
     this.addMouseEvent();
     if (this.config.url) {
       this.drawImage();
@@ -100,14 +99,12 @@ class DrawCanvas {
   }
   // 区分当前操作
   mousedown(e) {
-    // console.log('e', e)
     // 按住ctrlKey,为多选，可添加与取消
     // 如果当前为current,则不进行处理
     const point = this.windowToCanvas(e.clientX, e.clientY);
     this.startX = point.x;
     this.startY = point.y;
     this.mouseStatus = "down";
-    // console.log('q23423', this.mode)
     switch (this.mode) {
       case "select":
         this.originCurrent = this.isPointInRetc(point.x, point.y);
@@ -120,7 +117,6 @@ class DrawCanvas {
         }
         break;
       case "move":
-        // console.log('move 是不是跟拉伸放一起')
         // 移动模式要求 首先有选中，如没有则改为select模式，并判断是否有选中原则，如果没有则选中
         if (this.current) {
           // 移动
@@ -138,7 +134,6 @@ class DrawCanvas {
           }
         } else if (this.currentArray.length > 0) {
           // 多选中的->当前操作对象
-          console.log("批量操作");
           let current = this.isPointInRetc(point.x, point.y);
           this.originCurrent = [...this.currentArray];
           if (current) {
@@ -152,7 +147,6 @@ class DrawCanvas {
         break;
       case "draw":
         this.originCurrent = null;
-        console.log("draw");
         break;
     }
   }
@@ -211,7 +205,6 @@ class DrawCanvas {
       index: 0,
     };
     if (this.mode === "select" || this.mode === "move") {
-      console.warn("mode", this.isOpt, e);
       if (!this.isOpt) {
         // 如果当前是框选则不进行其他单元格的选中
         if (!this.current || this.current.type !== "select") {
@@ -352,7 +345,6 @@ class DrawCanvas {
       this.isOpt = "";
       this.mode = "move";
       this.c.style.cursor = "default";
-      console.log("drawSelect");
       this.current = null;
       this.modeChange("select");
       this.draw();
@@ -394,16 +386,6 @@ class DrawCanvas {
         this.deleteHistory = [];
         this.currentArray = arr;
       } else {
-        // 如果是table，则current也是没有的
-        // if (this.drawType.type === 'table') {
-        //   console.log('342342')
-        //   this.history.push({
-        //     type: this.isOpt,
-        //     data: cellList,
-        //     originData: []
-        //   })
-        // } else {
-        //
         if (this.currentArray.length > 0) {
           this.history.push({
             type: this.isOpt,
@@ -424,9 +406,6 @@ class DrawCanvas {
             },
           });
         }
-
-        // }
-        console.log("this.history", this.history);
         this.deleteHistory = [];
       }
       this.isOpt = "";
@@ -441,8 +420,6 @@ class DrawCanvas {
     this.moveY = point.y;
     // 自动滚动
     if (this.mouseStatus === "down" && this.mode !== "select") {
-      // console.warn('eeee', e.clientY, e.layerY, this.moveY)
-      // let dom = document.getElementById("canvas-wrapper");
       let dom = this.c.parentElement;
       let ch = dom.clientHeight;
       let cw = dom.clientWidth;
@@ -486,7 +463,6 @@ class DrawCanvas {
 
       // 在做一个向上滚动的兼容
       const scrolll = dom.scrollTop;
-      // console.log('e.clientY', e.clientY, scrolll)
       if (scrolll > 0 && e.clientY < 80) {
         clearInterval(this.timerTop);
         this.timerTop = setInterval(() => {
@@ -503,7 +479,6 @@ class DrawCanvas {
       }
     }
     if (this.mode === "move") {
-      // console.log('this mode', this.mode)
       if (this.current) {
         if (
           (this.current.x1 + this.resize <= this.moveX &&
@@ -639,7 +614,6 @@ class DrawCanvas {
 
   // 多选的时候 批量调整单元格行列
   resizeMultipleCell() {
-    console.log("批量相应方法");
     if (this.tableStatus === "moving") {
       return;
     }
@@ -696,7 +670,6 @@ class DrawCanvas {
       }
     }
     if ((point && point === "left") || this.tableStatus === "m-left-resize") {
-      // console.log('批量相应 left')
       if (this.tableStatus === "m-left-resize") {
         this.c.style.cursor = "w-resize";
       }
@@ -705,12 +678,10 @@ class DrawCanvas {
       (point && point === "right") ||
       this.tableStatus === "m-right-resize"
     ) {
-      console.log("批量相应 right");
       if (this.tableStatus === "m-right-resize") {
         this.c.style.cursor = "e-resize";
       }
       this.resizeMultipleRight(this.base, list);
-      // console.log('right', this.base)
     } else if (
       (point && point === "top") ||
       this.tableStatus === "m-top-resize"
@@ -732,7 +703,6 @@ class DrawCanvas {
       (this.tableStatus === "m-left-resize" || !this.tableStatus)
     ) {
       this.tableStatus = "m-left-resize";
-      // console.log('LEFT 进来了')
       if (this.cellMatchList.length === 0) {
         // 选中在基准线附近的单元格
         list.forEach((item) => {
@@ -799,9 +769,7 @@ class DrawCanvas {
         }
       });
       this.isOpt = "move";
-      // console.log('LEFT 计算完了')
       this.draw();
-      // this.dealData()
     }
   }
 
@@ -867,7 +835,6 @@ class DrawCanvas {
               ? this.cellflowList[flowIndex].x1 + this.moveX - this.startX
               : min;
           x1 = x1 < max ? x1 : max;
-          console.log("x1", x1);
           this.layers[i] = {
             ...item,
             x1,
@@ -1229,7 +1196,6 @@ class DrawCanvas {
       this.ctx.lineWidth = item.lineWidth || 1;
       this.ctx.stroke();
     });
-    console.log("arr", arr);
     arr.forEach((item) => {
       this.ctx.beginPath();
       this.ctx.rect(item.x1, item.y1, item.x2 - item.x1, item.y2 - item.y1);
@@ -1475,7 +1441,6 @@ class DrawCanvas {
     if (this.tableStatus && this.tableStatus !== "moving") {
       return;
     }
-    console.log("move fate", this.tableStatus);
     this.tableStatus = "moving";
     if (this.current) {
       const xd = this.moveX - this.leftDistance - this.current.x1;
@@ -2041,7 +2006,6 @@ class DrawCanvas {
   revoke() {
     if (this.history.length >= 1) {
       let info = this.history.pop();
-      console.log("revoke", info, this.history);
       if (info.type === "move" || info.type === "resize") {
         if (info.selectOpt) {
           // 批量操作
@@ -2049,7 +2013,6 @@ class DrawCanvas {
             info.originData.forEach((c) => {
               if (c.key === item.key) {
                 this.layers[index] = c;
-                console.log("ccc", this.layers[index], c);
               }
             });
           });
@@ -2063,7 +2026,6 @@ class DrawCanvas {
       } else if (info.type === "delete") {
         if (info.selectOpt) {
           // 批量操作
-          console.log("infoiunfo", info);
           this.layers = this.layers.concat(info.originData);
         } else {
           this.layers.push(info.originData);
@@ -2094,7 +2056,6 @@ class DrawCanvas {
         }
       }
       this.deleteHistory.push(info);
-      console.log("this.deleteHistory", this.deleteHistory);
       this.draw();
     }
   }
@@ -2103,7 +2064,6 @@ class DrawCanvas {
   reRevoke() {
     if (this.deleteHistory.length > 0) {
       let info = this.deleteHistory.pop();
-      console.log("reer", info);
       if (info.type === "move" || info.type === "resize") {
         if (info.selectOpt) {
           // 批量操作
@@ -2119,7 +2079,6 @@ class DrawCanvas {
           let index = this.layers.findIndex(
             (item) => item.key === info.data.key
           );
-          console.log("index", index);
           this.layers[index] = {
             ...info.data,
           };
@@ -2159,15 +2118,8 @@ class DrawCanvas {
     }
   }
 
-  // 1
-  // x1: 335, y1: 64
-  // origindata x1: 335, y1: 117
-
-  // x1:74, y1:55
-  // origindata x1:335, y1:64
   // 删除，撤销，以及反撤销逻辑
   delete() {
-    console.log("delet");
     if (this.current) {
       if (this.current.type === "select") {
         let arr = [];
@@ -2191,7 +2143,6 @@ class DrawCanvas {
           data: "",
           originData: [...notArr],
         });
-        console.log("this.history select", this.history);
         this.layers = arr;
         // this.removeSelect()
       } else {
@@ -2200,7 +2151,6 @@ class DrawCanvas {
           data: "",
           originData: this.current,
         });
-        console.log("this.history", this.history);
         let index = this.layers.findIndex(
           (item) => item.key === this.current.key
         );
@@ -2278,7 +2228,6 @@ class DrawCanvas {
         });
       }
     });
-    console.log("current", this.currentArray);
   }
 
   // 保存并计算坐标
@@ -2429,10 +2378,8 @@ class DrawCanvas {
   // 判断是否需要保存
   checkIsSave() {
     let result = true;
-    // this.removeSelect()
     const list = this.saveDraw("check");
     if (this.saveCurrent.length === list.length) {
-      // console.log('1')
       for (let i = 0; i < this.saveCurrent.length; i++) {
         if (
           this.saveCurrent[i].x1 !== list[i].x1 ||
@@ -2444,7 +2391,6 @@ class DrawCanvas {
         }
       }
     } else {
-      // console.log('2')
       result = false;
     }
     return result;
