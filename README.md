@@ -2,7 +2,9 @@
 
 使用 canvas 实现画表格，以及移动，拖拽，拉伸，删除，回撤等功能
 
-体验地址：
+[体验地址](https://test.yeshaojun.com/)
+
+也可以在 github 上 clone 代码，直接打开 index.html
 
 项目由来：有个报表识别的项目，识别结果可能不准确，需要在图片上二次编辑。在网上找了一圈，也没找到合适的框架，因此自己封装了一个，使用 canvas 绘制 table,并实现批量移动，拉伸，拖拽，删除，等功能
 
@@ -55,11 +57,11 @@ draw.setMode(mode)
 # 使用方式
 
 ```
-    draw.setMode("draw", {
-        type: "table",
-        tr: 3,
-        td: 4,
-    });
+          draw.setMode("draw", {
+            type: "table",
+            tr: 3,
+            td: 4,
+          });
 ```
 
 绘制 table 的时候，setMode 需要第二个参数，并传入绘制的行列
@@ -83,7 +85,7 @@ if(!draw.noUpdate) {
 
 ```
 
-撤销
+撤销/反撤销
 
 ```
 
@@ -97,6 +99,8 @@ if(draw.deleteHistory.length > 0) {
 
 
 ```
+
+放大/缩小
 
 ```
 

@@ -1,7 +1,8 @@
 {
   "name": "canvas-draw-table",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "canvas编辑table插件",
+  "private": false,
   "author": {
     "name": "ysj",
     "email": "yeshaojun5056@163.com"
