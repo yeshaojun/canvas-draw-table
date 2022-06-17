@@ -1,13 +1,13 @@
 {
   "name": "canvas-draw-table",
-  "version": "1.0.2",
+  "version": "1.0.7",
   "description": "canvas编辑table插件",
   "private": false,
   "author": {
     "name": "ysj",
     "email": "yeshaojun5056@163.com"
   },
-  "main": "lib/main.bundle.js",
+  "main": "lib/canvas-draw-table.js",
   "keywords": [
     "canvas",
     "table",
@@ -43,5 +43,6 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "files": ["lib/"]
 }
