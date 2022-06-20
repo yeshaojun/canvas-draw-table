@@ -52,9 +52,10 @@
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
     ></script>
-    <script src=".lib/canvas-draw-table.js"></script>
+    <script src="./lib/canvas-draw-table.js"></script>
     <script>
       window.onload = function () {
+        console.log('WINDOW', window)
         var draw = window.$DrawTable.default(
           {
             url: "./src/test.png",
@@ -200,15 +201,28 @@
         });
 
         $("#delete").on("click", function () {
-          draw.delete();
+          if(draw.current || draw.currentArray.length > 0) {
+            draw.delete();
+          } else {
+            alert('暂无选中单元格')
+          }
         });
 
         $("#revoke").on("click", function () {
-          draw.revoke();
+          if(draw.history.length > 0) {
+              draw.revoke()
+          } else {
+            alert('暂无可撤销内容')
+          }
+         
         });
 
         $("#reRevoke").on("click", function () {
-          draw.reRevoke();
+          if(draw.deleteHistory.length > 0) {
+            draw.reRevoke()
+          } else {
+            alert('暂无可回退内容')
+          }
         });
 
         $("#big").on("click", function () {
@@ -220,8 +234,14 @@
         });
 
         $("#save").on("click", function () {
-          const data = draw.saveDraw();
+          if(!draw.noUpdate) {
+            const data = draw.saveDraw();
+            alert('保存成功，数据请在console中查看')
           console.log("data", JSON.stringify(data));
+          } else {
+            alert('暂无修改，无需保存')
+          }
+     
         });
       };
     </script>

@@ -1251,7 +1251,7 @@ class DrawCanvas {
   Recalculate() {
     let imgleft = 0;
     let imgtop = 0;
-    if (this.layers[0].type === "image") {
+    if (this.layers[0].type === "img") {
       this.layers[0] = this.getImgCoord();
       imgleft = this.layers[0].x1;
       imgtop = this.layers[0].y1;
@@ -1951,7 +1951,7 @@ class DrawCanvas {
   getCellLocation(str, item) {
     let imgleft = 0;
     let imgtop = 0;
-    if (this.layers[0].type === "iamge") {
+    if (this.layers[0].type === "img") {
       imgleft = this.layers[0].x1;
       imgtop = this.layers[0].y1;
     }
@@ -1972,7 +1972,7 @@ class DrawCanvas {
   getTableLocation(str, item) {
     let imgleft = 0;
     let imgtop = 0;
-    if (this.layers[0].type === "iamge") {
+    if (this.layers[0].type === "img") {
       imgleft = this.layers[0].x1;
       imgtop = this.layers[0].y1;
     }
@@ -2235,7 +2235,7 @@ class DrawCanvas {
     let useArr = []; // 有效数据
     let offsetLeft = 0;
     let offsetTop = 0;
-    if (this.layers[0].type === "iamge") {
+    if (this.layers[0].type === "img") {
       offsetLeft = this.layers[0].x1;
       offsetTop = this.layers[0].y1;
     }
