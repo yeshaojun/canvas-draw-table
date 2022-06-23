@@ -1,12 +1,13 @@
 {
   "name": "canvas-draw-table",
-  "version": "1.0.1",
+  "version": "1.0.8",
   "description": "canvas编辑table插件",
   "private": false,
   "author": {
     "name": "ysj",
     "email": "yeshaojun5056@163.com"
   },
+  "main": "lib/canvas-draw-table.js",
   "keywords": [
     "canvas",
     "table",
@@ -34,8 +35,12 @@
     "@babel/preset-env": "^7.18.2",
     "babel-loader": "^8.2.5",
     "clean-webpack-plugin": "^4.0.0",
+<<<<<<< HEAD
     "copy-webpack-plugin": "^11.0.0",
     "html-webpack-plugin": "^5.5.0",
+=======
+    "uglifyjs-webpack-plugin": "^2.2.0",
+>>>>>>> 497e9084ceeabedfd184c1fd50d2eb6764da8324
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.2"
@@ -44,5 +49,6 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "files": ["lib/"]
 }

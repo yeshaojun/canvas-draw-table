@@ -4,20 +4,16 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 module.exports = {
   entry: "./src/plugin/index.js",
+<<<<<<< HEAD
   mode: "development",
+=======
+  mode: "production",
+>>>>>>> 497e9084ceeabedfd184c1fd50d2eb6764da8324
   output: {
-    filename: "[name].bundle.js",
+    filename: "canvas-draw-table.js",
     path: path.resolve(__dirname, "lib"),
     library: "$DrawTable",
-    libraryTarget: "umd",
-  },
-  devServer: {
-    static: {
-      directory: path.join(__dirname, "dist"),
-    },
-    compress: true,
-    port: 9000,
-    hot: true,
+    libraryTarget: 'umd'
   },
   plugins: [
     new CleanWebpackPlugin(),
