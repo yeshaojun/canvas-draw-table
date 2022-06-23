@@ -1251,7 +1251,7 @@ class DrawCanvas {
   Recalculate() {
     let imgleft = 0;
     let imgtop = 0;
-    if (this.layers[0].type === "image") {
+    if (this.layers[0].type === "img") {
       this.layers[0] = this.getImgCoord();
       imgleft = this.layers[0].x1;
       imgtop = this.layers[0].y1;
