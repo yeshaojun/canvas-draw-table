@@ -1,0 +1,213 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Document</title><style>body {
+        padding: 0;
+        margin: 0;
+      }
+      button {
+        margin: 0 10px;
+      }
+      button.active {
+        border: 1px solid red;
+      }
+      .header {
+        height: 64px;
+        line-height: 64px;
+        background-color: #edf5fe;
+        text-align: center;
+        user-select: none;
+      }
+      .content-wrapper {
+        height: calc(100vh - 64px);
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: auto;
+        background-color: #f0f0f0;
+      }</style><script defer="defer" src="canvas-draw-table.js"></script></head><body><div class="header"><button id="save">保存</button> <button name="drawSelect" id="selectAll">框选</button> <button name="cell" id="cell">单元格</button> <button name="table" id="table">表格</button> <button id="delete">删除</button> <button id="revoke">撤销</button> <button id="reRevoke">反撤销</button> <button id="big">放大</button> <button id="mini">缩小</button></div><div class="content-wrapper"><canvas id="edit-photo"></canvas></div><script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script><script>window.onload = function () {
+        console.log('WINDOW', window)
+        var draw = window.$DrawTable.default(
+          {
+            url: "./test.png",
+            dom: "edit-photo",
+            defaultData: [
+              {
+                type: "cell",
+                location: [
+                  [114, 100],
+                  [347, 100],
+                  [347, 229],
+                  [114, 229],
+                ],
+              },
+              {
+                type: "cell",
+                location: [
+                  [347, 100],
+                  [555, 100],
+                  [555, 229],
+                  [347, 229],
+                ],
+              },
+              {
+                type: "cell",
+                location: [
+                  [555, 100],
+                  [814, 100],
+                  [814, 229],
+                  [555, 229],
+                ],
+              },
+              {
+                type: "cell",
+                location: [
+                  [814, 100],
+                  [1047, 100],
+                  [1047, 229],
+                  [814, 229],
+                ],
+              },
+              {
+                type: "cell",
+                location: [
+                  [114, 229],
+                  [347, 229],
+                  [347, 358],
+                  [114, 358],
+                ],
+              },
+              {
+                type: "cell",
+                location: [
+                  [347, 229],
+                  [555, 229],
+                  [555, 358],
+                  [347, 358],
+                ],
+              },
+              {
+                type: "cell",
+                location: [
+                  [555, 229],
+                  [814, 229],
+                  [814, 358],
+                  [555, 358],
+                ],
+              },
+              {
+                type: "cell",
+                location: [
+                  [814, 229],
+                  [1047, 229],
+                  [1047, 358],
+                  [814, 358],
+                ],
+              },
+              {
+                type: "cell",
+                location: [
+                  [114, 358],
+                  [347, 358],
+                  [347, 486],
+                  [114, 486],
+                ],
+              },
+              {
+                type: "cell",
+                location: [
+                  [347, 358],
+                  [555, 358],
+                  [555, 486],
+                  [347, 486],
+                ],
+              },
+              {
+                type: "cell",
+                location: [
+                  [555, 358],
+                  [814, 358],
+                  [814, 486],
+                  [555, 486],
+                ],
+              },
+              {
+                type: "cell",
+                location: [
+                  [814, 358],
+                  [1047, 358],
+                  [1047, 486],
+                  [814, 486],
+                ],
+              },
+            ],
+          },
+          function (type) {
+            setModeActive(type);
+          }
+        );
+
+        var setModeActive = function (type) {
+          window.$("button").removeClass("active");
+          window.$("button[name = " + type + "]").addClass("active");
+        };
+
+        $("#selectAll").on("click", function () {
+          setModeActive("drawSelect");
+          draw.setMode("drawSelect");
+        });
+
+        $("#cell").on("click", function () {
+          setModeActive("cell");
+          draw.setMode("draw");
+        });
+
+        $("#table").on("click", function () {
+          setModeActive("table");
+          draw.setMode("draw", {
+            type: "table",
+            tr: 3,
+            td: 4,
+          });
+        });
+
+        $("#delete").on("click", function () {
+          if(draw.current || draw.currentArray.length > 0) {
+            draw.delete();
+          } else {
+            alert('暂无选中单元格')
+          }
+        });
+
+        $("#revoke").on("click", function () {
+          if(draw.history.length > 0) {
+              draw.revoke()
+          } else {
+            alert('暂无可撤销内容')
+          }
+         
+        });
+
+        $("#reRevoke").on("click", function () {
+          if(draw.deleteHistory.length > 0) {
+            draw.reRevoke()
+          } else {
+            alert('暂无可回退内容')
+          }
+        });
+
+        $("#big").on("click", function () {
+          draw.zoom("up");
+        });
+
+        $("#mini").on("click", function () {
+          draw.zoom("down");
+        });
+
+        $("#save").on("click", function () {
+          if(!draw.noUpdate) {
+            const data = draw.saveDraw();
+            alert('保存成功，数据请在console中查看')
+          console.log("data", JSON.stringify(data));
+          } else {
+            alert('暂无修改，无需保存')
+          }
+     
+        });
+      };</script></body></html>

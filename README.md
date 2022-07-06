@@ -2,7 +2,7 @@
 
 使用 canvas 实现画表格，以及移动，拖拽，拉伸，删除，回撤等功能
 
-[体验地址](https://test.yeshaojun.com/)
+[体验地址](https://demo.yeshaojun.com/)
 
 也可以在 github 上 clone 代码，直接打开 index.html
 
